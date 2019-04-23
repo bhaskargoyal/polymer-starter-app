@@ -16,6 +16,7 @@ import './pages/demo-simple.js';
 import './pages/demo-medium.js';
 import './pages/demo-advanced.js';
 import './pages/trouble-shooting.js';
+import './pages/app-home.js'
 
 
 class AssistApp extends PolymerElement {
@@ -27,16 +28,16 @@ class AssistApp extends PolymerElement {
       },
       _pageData: {
         type: Object,
-        observer: '_pageDataChanged'
+        observer: '_pageDataChanged',
+        value: {
+          page: "home"
+        }
       },
       _subRoute: {
         type: Object
       },
       _idData: {
         type: Object
-      },
-      _selectedPage: {
-        type: String
       },
       drawerOpened: {
         type: Boolean,
@@ -139,6 +140,11 @@ class AssistApp extends PolymerElement {
               
               <paper-listbox selected="[[_pageData.page]]" attr-for-selected="name">
                 
+                <paper-icon-item id='app-home' on-click='handlePaperIconItemClick' name='home'>
+                  <iron-icon class="grayIcon" icon="home" slot="item-icon"></iron-icon>
+                  <span>Home</span>
+                </paper-icon-item>
+
                 <paper-icon-item id='about-me' on-click='handlePaperIconItemClick' name='about-me'>
                   <iron-icon class="grayIcon" icon="account-circle" slot="item-icon"></iron-icon>
                   <span>About Me</span>
@@ -181,6 +187,7 @@ class AssistApp extends PolymerElement {
         <!-- Main Content -->
         <div id="content-container">
           <iron-pages selected="[[_pageData.page]]" attr-for-selected="page-name">
+            <app-home page-name="home"></app-home>
             <about-me page-name="about-me"></about-me>
             <app-resources page-name="resources"></app-resources>
             <demo-simple page-name="demo-simple"></demo-simple>
@@ -210,7 +217,9 @@ class AssistApp extends PolymerElement {
         }
     });
     // console.log(paperElemClicked.id);
-    if (paperElemClicked.id ==="about-me") {
+    if (paperElemClicked.id ==="app-home") {
+      window.location.href = '#/home';
+    } else if (paperElemClicked.id ==="about-me") {
       window.location.href = '#/about-me';
     } else if (paperElemClicked.id ==="resources") {
       window.location.href = '#/resources';
